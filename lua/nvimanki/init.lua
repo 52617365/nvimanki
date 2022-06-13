@@ -7,7 +7,7 @@ local utils = require('nvimanki.utils')
 local G = {}
 
 function G.testimodule()
-  print(utils.visual_selection())
+  local decks = utils.get_all_decks()
 end
 
 return G
