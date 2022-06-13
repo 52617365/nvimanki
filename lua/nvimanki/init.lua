@@ -7,7 +7,7 @@ local utils = require('nvimanki.utils')
 local G = {}
 
 function G.testimodule()
-  print("testipaskaa")
+  print(utils.visual_selection())
 end
 
 return G
