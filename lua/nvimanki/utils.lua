@@ -1,4 +1,5 @@
 local Job = require 'plenary.job'
+local curl = require "plenary.curl"
 
 local G = {}
 
@@ -22,35 +23,60 @@ G.visual_selection = function()
   end
 end
 
+-- G.get_all_decks = function()
+--   local command = [[curl localhost:8765 -X POST -d '{"action": "deckNames", "version": 7}']]
+--   Job:new({
+--     command = command,
+--     args = {},
+--     cwd = '/usr/bin',
+--     env = { ['a'] = 'b' },
+--     on_exit = function(j, return_val)
+--       print(return_val)
+--       print(j:result())
+--     end,
+--   }):sync() -- or start()
+-- end
+
 G.get_all_decks = function()
-  local command = [[curl localhost:8765 -X POST -d '{"action": "deckNames", "version": 7}']]
-  Job:new({
-    command = command,
-    args = {},
-    cwd = '/usr/bin',
-    env = { ['a'] = 'b' },
-    on_exit = function(j, return_val)
-      print(return_val)
-      print(j:result())
-    end,
-  }):sync() -- or start()
+  local body = {
+    action = "deckNames",
+    version = 7,
+  }
+
+  local res = curl.post("127.0.0.1:8765", {
+    body = vim.fn.json_encode(body),
+    headers = {
+      content_type = "application/json",
+    },
+  })
+
+  if res.status == 200 then
+    return res.body
+  else
+    print("Server not running.")
+    return nil
+  end
 end
 
 G.send_request = function(query)
-  local curl_opts = "curl -X POST -H \"Content-Type: application/json"
-  local curl_payload = query .. ""
+  local body = {
+    action = "deckNames",
+    version = 7,
+  }
 
-  local full_command = curl_opts .. curl_payload
-  Job:new({
-    command = 'rg',
-    args = { '--files' },
-    cwd = '/usr/bin',
-    env = { ['a'] = 'b' },
-    on_exit = function(j, return_val)
-      print(return_val)
-      print(j:result())
-    end,
-  }):sync() -- or start()
+  local res = curl.post("127.0.0.1:8765", {
+    body = vim.fn.json_encode(body),
+    headers = {
+      content_type = "application/json",
+    },
+  })
+
+  if res.status == 200 then
+    return res.body
+  else
+    print("Server not running.")
+    return nil
+  end
 end
 
 return G
