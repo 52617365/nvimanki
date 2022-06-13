@@ -1,4 +1,3 @@
-local Job = require 'plenary.job'
 local curl = require "plenary.curl"
 
 local G = {}
