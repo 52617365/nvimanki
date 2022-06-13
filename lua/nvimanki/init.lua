@@ -7,13 +7,8 @@ local utils = require('nvimanki.utils')
 local G = {}
 
 function G.testimodule()
-  local decks = vim.fn.json_decode(utils.get_all_decks())
-
-  if decks.error ~= vim.NIL then
-    print("server not running")
-  else
-    print(vim.inspect(decks.result))
-  end
+  local decks = utils.get_all_decks()
+  print(vim.inspect(decks))
 end
 
 return G

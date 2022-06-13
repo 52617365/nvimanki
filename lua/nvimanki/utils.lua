@@ -22,20 +22,6 @@ G.visual_selection = function()
   end
 end
 
--- G.get_all_decks = function()
---   local command = [[curl localhost:8765 -X POST -d '{"action": "deckNames", "version": 7}']]
---   Job:new({
---     command = command,
---     args = {},
---     cwd = '/usr/bin',
---     env = { ['a'] = 'b' },
---     on_exit = function(j, return_val)
---       print(return_val)
---       print(j:result())
---     end,
---   }):sync() -- or start()
--- end
-
 G.get_all_decks = function()
   local body = {
     action = "deckNames",
@@ -50,9 +36,15 @@ G.get_all_decks = function()
   })
 
   if res.status == 200 then
-    return res.body
+    local parsed_response = vim.fn.json_decode(res.body)
+    if parsed_response.error ~= vim.NIL then
+      print("server not running")
+      return nil
+    else
+      return parsed_response.result
+    end
   else
-    print("Server not running.")
+    print("error sending request")
     return nil
   end
 end
