@@ -2,6 +2,10 @@ local curl = require "plenary.curl"
 local M = require "nvimanki.fileio"
 local G = {}
 
+-- TODO:
+-- Update the file containing decks everytime a new deck gets created or a deck gets deleted.
+-- Prompt user to update decks if they can't be found.
+
 -- Gets all decks from the AnkiConnect endpoint and then writes them all into a file.
 G.update_decks = function()
   local body = {
