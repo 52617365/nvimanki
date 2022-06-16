@@ -36,10 +36,10 @@ G.update_decks = function()
 end
 
 -- This is not yet used.
-G.send_request = function(query)
+G.create_card = function(query)
   local body = {
     action = "deckNames",
-    version = 7,
+    version = 6,
   }
 
   local res = curl.post("127.0.0.1:8765", {
@@ -53,6 +53,39 @@ G.send_request = function(query)
     return res.body
   else
     print("Server not running.")
+    return nil
+  end
+end
+
+
+-- TODO: Get deck_name from user.
+G.create_deck = function()
+  local deck_name = "insert deckname"
+
+  local body = {
+    action = "createDeck",
+    version = 6,
+    params = { deck = deck_name },
+  }
+
+  local res = curl.post("127.0.0.1:8765", {
+    body = vim.fn.json_encode(body),
+    headers = {
+      content_type = "application/json",
+    },
+  })
+
+  if res.status == 200 then
+    local parsed_response = vim.fn.json_decode(res.body)
+    if parsed_response.error ~= vim.NIL then
+      print("Error creating deck, check that your server is running")
+      return 1
+    else
+      print("Succesfully created a deck with the name: " .. deck_name)
+      return 0
+    end
+  else
+    print("error sending request")
     return nil
   end
 end
