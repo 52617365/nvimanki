@@ -7,7 +7,7 @@ local utils = require('nvimanki.api')
 local G = {}
 
 function G.testimodule()
-  local decks = utils.get_all_decks()
+  local decks = utils.update_decks()
   -- print(vim.inspect(decks))
 end
 

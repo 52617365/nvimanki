@@ -3,7 +3,7 @@ local M = require "nvimanki.fileio"
 local G = {}
 
 -- Gets all decks from the AnkiConnect endpoint and then writes them all into a file.
-G.get_all_decks = function()
+G.update_decks = function()
   local body = {
     action = "deckNames",
     version = 7,
