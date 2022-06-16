@@ -9,6 +9,7 @@ G.write_to_file = function(contents)
     for i, v in pairs(contents) do
       file:write(v, "\n")
     end
+    file:close()
     print("Successfully updated decks.")
   else
     print("Error opening config file.")
@@ -30,9 +31,11 @@ G.read_deck_file = function()
     return {}
   end
   local lines = {}
+  -- io.lines closes file by default.
   for line in io.lines(file) do
     lines[#lines + 1] = line
   end
   return lines
 end
+
 return G
