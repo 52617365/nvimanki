@@ -1,5 +1,6 @@
 local G = {}
 
+-- this should be called everything user updates or deletes decks.
 G.write_to_file = function(contents)
   -- local path = vim.api.nvim_list_runtime_paths() .. "/.nvimanki/decks.txt"
   -- print(path)

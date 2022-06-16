@@ -1,5 +1,4 @@
 local curl = require "plenary.curl"
-
 local G = {}
 
 -- Returns the text contents of the visualized text.

@@ -2,13 +2,14 @@
 -- Last Change:	2022 Jun 13
 -- Maintainer:	Rasmus Mäki <rasengithub@protonmail.com>
 -- License:	This file is placed in the public domain.
-local utils = require('nvimanki.api')
+local ui = require('nvimanki.picker')
 
 local G = {}
 
 function G.testimodule()
-  local decks = utils.update_decks()
-  -- print(vim.inspect(decks))
+  -- local asd = ui.display_decks()
+  -- local question = ui.choose_question()
+  local deck = ui.choose_deck()
 end
 
 return G
