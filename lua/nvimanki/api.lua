@@ -1,18 +1,28 @@
 local curl = require "plenary.curl"
-local M = require "nvimanki.fileio"
+local M = require 'nvimanki.fileio'
 local G = {}
 
 -- TODO:
 -- Update the file containing decks everytime a new deck gets created or a deck gets deleted.
 -- Prompt user to update decks if they can't be found.
 
--- Gets all decks from the AnkiConnect endpoint and then writes them all into a file.
-G.update_decks = function()
-  local body = {
-    action = "deckNames",
-    version = 7,
-  }
+G.api_error_handling = function(res, success, error)
+  if res.status == 200 then
+    local parsed_response = vim.fn.json_decode(res.body)
+    if parsed_response.error ~= vim.NIL then
+      print(error)
+      return 1
+    else
+      print(success)
+      return 0
+    end
+  else
+    print(error)
+    return 1
+  end
+end
 
+G.send_post_request = function(body, success, error)
   local res = curl.post("127.0.0.1:8765", {
     body = vim.fn.json_encode(body),
     headers = {
@@ -20,25 +30,55 @@ G.update_decks = function()
     },
   })
 
-  if res.status == 200 then
-    local parsed_response = vim.fn.json_decode(res.body)
-    if parsed_response.error ~= vim.NIL then
-      print("server not running")
-      return nil
-    else
-      M.write_to_file(parsed_response.result)
-      return 0
-    end
+  -- Return nil if error.
+  local err = G.api_error_handling(res, success, error)
+  if err == 1 then
+    return err
   else
-    print("error sending request")
-    return nil
+    return res
+  end
+
+end
+
+-- Gets all decks from the AnkiConnect endpoint and then writes them all into a file.
+G.update_decks = function()
+  local body = {
+    action = "deckNames",
+    version = 7,
+  }
+  local res = G.send_post_request(body, "succesfully updated decks", "error updating decks")
+
+  -- if it was not an error, write to file.
+  if res ~= 1 then
+    M.write_to_file(res.result)
   end
 end
 
--- This is not yet used.
-G.create_card = function(question, answer, deck_name, card_name)
-
-  G.update_decks()
+G.create_note = function(deck, question, answer)
+  local body = {
+    action = "addNote",
+    version = 6,
+    params = {
+      note = {
+        deckName = deck,
+        modelName = "Basic",
+        fields = {
+          Front = question,
+          Back = answer
+        },
+        options = {
+          allowDuplicate = false,
+          duplicateScope = "deck",
+          duplicateScopeOptions = {
+            deckName = deck,
+            checkChildren = false,
+            checkAllModels = false
+          }
+        },
+      }
+    }
+  }
+  local _ = G.send_post_request(body, "succesfully created note", "error creating note")
 end
 
 
@@ -50,27 +90,11 @@ G.create_deck = function(deck_name)
     params = { deck = deck_name },
   }
 
-  local res = curl.post("127.0.0.1:8765", {
-    body = vim.fn.json_encode(body),
-    headers = {
-      content_type = "application/json",
-    },
-  })
+  local res = G.send_post_request(body, "succesfully created " .. deck_name, "error creating " .. deck_name)
 
-  if res.status == 200 then
-    local parsed_response = vim.fn.json_decode(res.body)
-    if parsed_response.error ~= vim.NIL then
-      print("Error creating deck, check that your server is running")
-      return 1
-    else
-      print("Succesfully created " .. deck_name)
-      return 0
-    end
-  else
-    print("error sending request")
-    return nil
+  if res == 0 then
+    G.update_decks()
   end
-  G.update_decks()
 end
 
 -- TODO: MAKE THIS WORK.
@@ -87,30 +111,12 @@ G.delete_deck = function()
   }
   print(vim.fn.json_encode(body))
 
-  local res = curl.post("127.0.0.1:8765", {
-    body = vim.fn.json_encode(body),
-    headers = {
-      content_type = "application/json",
-    },
-  })
+  local res = G.send_post_request(body, "succesfully deleted " .. deck_name, "error deleting " .. deck_name)
 
-  if res.status == 200 then
-    local parsed_response = vim.fn.json_decode(res.body)
-    if parsed_response.error ~= vim.NIL then
-      print(res.body)
-      -- print("Error deleting deck, check that your server is running")
-      return 1
-    else
-      -- print("Succesfully deleted " .. deck_name)
-      print(res.body)
-      return 0
-    end
-  else
-    print(res.body)
-    -- print("Error deleting deck, check that your server is running")
-    return 1
+  -- if success, update decks.
+  if res == 0 then
+    G.update_decks()
   end
-  G.update_decks()
 end
 
 return G

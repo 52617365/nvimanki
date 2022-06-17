@@ -8,17 +8,7 @@ local api = require('nvimanki.api')
 local G = {}
 
 function G.testimodule()
-  -- local asd = ui.display_decks()
-  -- local question = ui.choose_question()
-  -- api.create_deck()
-  -- local decks = api.update_decks()
-  -- ui.gen_menu_items()
-  local answer = ui.choose_answer()
-  -- for index, value in ipairs(items) do
-  --   print(vim.inspect(value.text))
-  -- end
-  -- ui.choose_question()
-  -- api.delete_deck()
+  api.create_deck("randomname")
 end
 
 return G

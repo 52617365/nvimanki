@@ -15,7 +15,7 @@ G.gen_menu_items = function()
 end
 
 -- TODO: Capture the result of this function.
-G.choose_deck = function()
+G.choose_deck = function(question, answer)
   local decks = G.gen_menu_items()
   local menu = Menu({
     position = "20%",
@@ -47,8 +47,8 @@ G.choose_deck = function()
     on_close = function()
       print("CLOSED")
     end,
-    on_submit = function(item)
-      print(item.text)
+    on_submit = function(deck)
+      -- send request (deck.text, question, answer)
     end,
   })
   -- mount the component
@@ -57,7 +57,7 @@ G.choose_deck = function()
   menu:on(event.BufLeave, menu.menu_props.on_close, { once = true })
 end
 
-G.deck_creation = function(text)
+G.make_question_card = function()
   local input = Input({
     position = "20%",
     size = {
@@ -68,7 +68,44 @@ G.deck_creation = function(text)
     border = {
       style = "single",
       text = {
-        top = text,
+        top = "Enter question:",
+        top_align = "center",
+      },
+    },
+    win_options = {
+      winblend = 10,
+      winhighlight = "Normal:Normal",
+    },
+  }, {
+    prompt = "> ",
+    default_value = "",
+    on_close = function()
+      print("Input closed!")
+    end,
+    on_submit = function(value)
+      G.make_answer_card(value)
+    end,
+  })
+  -- mount/open the component
+  input:mount()
+  -- unmount component when cursor leaves buffer
+  input:on(event.BufLeave, function()
+    input:unmount()
+  end)
+end
+
+G.make_answer_card = function(question)
+  local input = Input({
+    position = "20%",
+    size = {
+      width = 20,
+      height = 2,
+    },
+    relative = "editor",
+    border = {
+      style = "single",
+      text = {
+        top = "Enter answer:",
         top_align = "center",
       },
     },
@@ -83,8 +120,10 @@ G.deck_creation = function(text)
       print("Input closed!")
     end,
     -- TODO: Collect this value.
-    on_submit = function(value)
-      print(vim.inspect(value))
+    on_submit = function(answer)
+      -- send request or ask for deck.
+      print(question .. " " .. answer)
+      -- ask for deck.
     end,
   })
   -- mount/open the component
@@ -95,9 +134,12 @@ G.deck_creation = function(text)
   end)
 end
 
+
+-- question depends on answer.
+
 -- TODO: Capture the result of this function.
-G.choose_question = function()
-  G.deck_creation("Enter question:")
+G.make_card = function()
+  G.make_question_card()
 end
 
 -- TODO: Capture the result of this function.
