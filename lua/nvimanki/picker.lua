@@ -16,7 +16,7 @@ end
 
 -- TODO: Capture the result of this function.
 G.choose_deck = function()
-  local decks = G.gen_menu_items() or print("You don't have any decks, update your decks.")
+  local decks = G.gen_menu_items()
   local menu = Menu({
     position = "20%",
     size = {
@@ -27,7 +27,7 @@ G.choose_deck = function()
     border = {
       style = "single",
       text = {
-        top = "Choose deck",
+        top = "Choose Deck",
         top_align = "center",
       },
     },
@@ -35,24 +35,22 @@ G.choose_deck = function()
       winblend = 10,
       winhighlight = "Normal:Normal",
     },
-  },
-    {
-      lines = decks,
-      max_width = 20,
-      keymap = {
-        focus_next = { "j", "<Down>", "<Tab>" },
-        focus_prev = { "k", "<Up>", "<S-Tab>" },
-        close = { "<Esc>", "<C-c>" },
-        submit = { "<CR>", "<Space>" },
-      },
-      on_close = function()
-        print("Deck chooser closed")
-      end,
-      on_submit = function(item)
-        print("SUBMITTED", vim.inspect(item))
-        return item
-      end,
-    })
+  }, {
+    lines = decks,
+    max_width = 20,
+    keymap = {
+      focus_next = { "j", "<Down>", "<Tab>" },
+      focus_prev = { "k", "<Up>", "<S-Tab>" },
+      close = { "<Esc>", "<C-c>" },
+      submit = { "<CR>", "<Space>" },
+    },
+    on_close = function()
+      print("CLOSED")
+    end,
+    on_submit = function(item)
+      print(item.text)
+    end,
+  })
   -- mount the component
   menu:mount()
   -- close menu when cursor leaves buffer
@@ -86,7 +84,7 @@ G.deck_creation = function(text)
     end,
     -- TODO: Collect this value.
     on_submit = function(value)
-      print(value)
+      print(vim.inspect(value))
     end,
   })
   -- mount/open the component
@@ -99,22 +97,12 @@ end
 
 -- TODO: Capture the result of this function.
 G.choose_question = function()
-  local question = G.deck_creation("Enter question:")
-  if question ~= nil then
-    return question
-  else
-    return question
-  end
+  G.deck_creation("Enter question:")
 end
 
 -- TODO: Capture the result of this function.
 G.choose_answer = function()
-  local answer = G.deck_creation("Enter Answer:")
-  if answer ~= "" then
-    print(answer)
-  else
-    print("no answer provided.")
-  end
+  G.deck_creation("Enter Answer:")
 end
 
 return G

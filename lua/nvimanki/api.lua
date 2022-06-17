@@ -35,15 +35,15 @@ G.update_decks = function()
   end
 end
 
--- TODO: Implement.
-G.create_card = function(query)
+-- This is not yet used.
+G.create_card = function(question, answer, deck_name, card_name)
+
+  G.update_decks()
 end
 
 
 -- TODO: Get deck_name from user.
-G.create_deck = function()
-  local deck_name = "insert deckname"
-
+G.create_deck = function(deck_name)
   local body = {
     action = "createDeck",
     version = 7,
@@ -70,20 +70,20 @@ G.create_deck = function()
     print("error sending request")
     return nil
   end
+  G.update_decks()
 end
 
 -- TODO: MAKE THIS WORK.
+-- SEEMS TO BE SOMETHING WRONG WITH THE API ITSELF.
 G.delete_deck = function()
-  local deck_name = [[insert deckname]]
-
+  local deck_name = "asd"
   local body = {
     action = "deleteDecks",
-    version = 7,
-    params =
-    {
+    version = 6,
+    params = {
       decks = { deck_name },
       cardsToo = true
-    },
+    }
   }
   print(vim.fn.json_encode(body))
 
@@ -97,15 +97,20 @@ G.delete_deck = function()
   if res.status == 200 then
     local parsed_response = vim.fn.json_decode(res.body)
     if parsed_response.error ~= vim.NIL then
-      print("Error deleting deck, check that your server is running")
+      print(res.body)
+      -- print("Error deleting deck, check that your server is running")
       return 1
     else
-      print("Succesfully deleted " .. deck_name)
+      -- print("Succesfully deleted " .. deck_name)
+      print(res.body)
       return 0
     end
   else
-    print("Error deleting deck, check that your server is running")
+    print(res.body)
+    -- print("Error deleting deck, check that your server is running")
     return 1
   end
+  G.update_decks()
 end
+
 return G
