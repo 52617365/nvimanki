@@ -2,7 +2,7 @@ local Menu = require("nui.menu")
 local event = require("nui.utils.autocmd").event
 local fileio = require 'nvimanki.fileio'
 local Input = require("nui.input")
-
+local api = require "nvimanki.api"
 local G = {}
 
 G.gen_menu_items = function()
@@ -48,6 +48,7 @@ G.choose_deck = function(question, answer)
       print("CLOSED")
     end,
     on_submit = function(deck)
+      api.create_note(deck, question, answer)
       -- send request (deck.text, question, answer)
     end,
   })
@@ -138,13 +139,8 @@ end
 -- question depends on answer.
 
 -- TODO: Capture the result of this function.
-G.make_card = function()
+G.make_note = function()
   G.make_question_card()
-end
-
--- TODO: Capture the result of this function.
-G.choose_answer = function()
-  G.deck_creation("Enter Answer:")
 end
 
 return G

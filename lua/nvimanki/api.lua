@@ -37,7 +37,6 @@ G.send_post_request = function(body, success, error)
   else
     return res
   end
-
 end
 
 -- Gets all decks from the AnkiConnect endpoint and then writes them all into a file.
