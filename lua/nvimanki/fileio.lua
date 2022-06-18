@@ -4,16 +4,19 @@ local G = {}
 G.write_to_file = function(contents)
   -- local path = vim.api.nvim_list_runtime_paths() .. "/.nvimanki/decks.txt"
   -- print(path)
+
   local testing_path = "testfile.txt"
+
   local file = io.open(testing_path, "w")
+
+  -- in other words, if file exists.
   if file ~= nil then
-    for i, v in pairs(contents) do
-      file:write(v, "\n")
+    for index, value in pairs(contents) do
+      file:write(value, "\n")
     end
     file:close()
-    print("Successfully updated decks.")
   else
-    print("Error opening config file.")
+    print("Error opening: " .. testing_path)
   end
 end
 
