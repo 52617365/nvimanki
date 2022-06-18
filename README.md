@@ -7,8 +7,7 @@
 * Auto updates decks after creating
 
 >- Install:
-> Using packer:
-> `use { '52617365/nvimanki', requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"}}`
+`use { '52617365/nvimanki', requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"}}`
 
 
 > Default keybindings:
