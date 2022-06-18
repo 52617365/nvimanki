@@ -139,8 +139,5 @@ end
 -- question depends on answer.
 
 -- TODO: Capture the result of this function.
-G.make_note = function()
-  G.make_question_card()
-end
 
 return G
