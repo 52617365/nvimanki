@@ -11,13 +11,12 @@
 - `use { '52617365/nvimanki', requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"}}`
 
 
-- Default keybindings:
-- `
-- ```
-- vim.keymap.set('n', '<leader>an', "<cmd>lua require('nvimanki').create_note()<cr>", opts)
-- vim.keymap.set('n', '<leader>ad', "<cmd>lua require('nvimanki').create_deck()<cr>", opts)
-- vim.keymap.set('n', '<leader>au', "<cmd>lua require('nvimanki').update_decks()<cr>", opts)
-- ```
+> Default keybindings:
+```
+vim.keymap.set('n', '<leader>an', "<cmd>lua require('nvimanki').create_note()<cr>", opts)
+vim.keymap.set('n', '<leader>ad', "<cmd>lua require('nvimanki').create_deck()<cr>", opts)
+vim.keymap.set('n', '<leader>au', "<cmd>lua require('nvimanki').update_decks()<cr>", opts)
+```
 
 
 - ## TODO
