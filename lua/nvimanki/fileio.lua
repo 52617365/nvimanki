@@ -2,12 +2,9 @@ local G = {}
 
 -- this should be called everything user updates or deletes decks.
 G.write_to_file = function(contents)
-  -- local path = vim.api.nvim_list_runtime_paths() .. "/.nvimanki/decks.txt"
-  -- print(path)
+  local path = vim.api.nvim_list_runtime_paths()[1] .. "/.nvimanki.txt"
 
-  local testing_path = "testfile.txt"
-
-  local file = io.open(testing_path, "w")
+  local file = io.open(path, "w")
 
   -- in other words, if file exists.
   if file ~= nil then
@@ -15,8 +12,9 @@ G.write_to_file = function(contents)
       file:write(value, "\n")
     end
     file:close()
+    print("Updated decks")
   else
-    print("Error opening: " .. testing_path)
+    print("Error opening: " .. path)
   end
 end
 
