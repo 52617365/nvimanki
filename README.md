@@ -25,5 +25,5 @@ vim.keymap.set('n', '<leader>au', "<cmd>lua require('nvimanki').update_decks()<c
 - Auto insert a note from visualized text
 - Add more note modes
 - View notes
-- Delete notes once Anki-Connect API start working (https://github.com/FooSoft/anki-connect/issues/335) 
+- Delete notes once Anki-Connect API start working https://github.com/FooSoft/anki-connect/issues/335
 - ?
