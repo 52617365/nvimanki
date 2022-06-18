@@ -1,6 +1,6 @@
 # nvimanki
 ## nvimanki utilizes the Anki-Connect API to bring Anki straight into Neovim.
-## Requires plenary.nvim and nui.nvim
+## Requires plenary.nvim, nui.nvim and the AnkiConnect Anki plugin.
 ### It lets you:
 * Add new decks into Anki
 * Create new notes (supports only basic as of now, more to come)
