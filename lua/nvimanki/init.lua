@@ -3,9 +3,11 @@
 -- Maintainer:	Rasmus Mäki <https://github.com/52617365/>
 -- License:	This file is placed in the public domain.
 local ui = require('nvimanki.picker')
+local api = require('nvimanki.api')
 
 -- TODO:
 -- UI to delete done when api starts working.
+-- Keybinding to update decks.
 
 -- public interface starts here.
 local G = {}
@@ -16,6 +18,10 @@ end
 
 function G.create_deck()
   ui.make_a_deck()
+end
+
+function G.update_decks()
+  api.update_decks()
 end
 
 function G.delete_deck()

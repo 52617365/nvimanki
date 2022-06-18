@@ -12,7 +12,6 @@ G.write_to_file = function(contents)
       file:write(value, "\n")
     end
     file:close()
-    print("Updated decks")
   else
     print("Error opening: " .. path)
   end
