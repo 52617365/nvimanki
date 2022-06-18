@@ -6,8 +6,11 @@
 * Create new notes (supports only basic as of now, more to come)
 * Auto updates decks after creating
 
->- Install:
-`use { '52617365/nvimanki', requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"}}`
+### Install:
+```
+Using Packer:
+use { '52617365/nvimanki', requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"}}
+```
 
 
 > Default keybindings:
