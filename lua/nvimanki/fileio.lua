@@ -28,7 +28,7 @@ end
 
 -- Reads file, returns an empty table if file does not exist.
 G.read_deck_file = function()
-  local file = "testfile.txt"
+  local file = vim.api.nvim_list_runtime_paths()[1] .. "/.nvimanki.txt"
   if not file_exists(file) then
     return {}
   end
