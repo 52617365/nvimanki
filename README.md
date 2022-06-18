@@ -24,4 +24,5 @@ vim.keymap.set('n', '<leader>au', "<cmd>lua require('nvimanki').update_decks()<c
 - ## TODO
 - Auto insert a note from visualized text
 - Add more note modes
+- View notes
 - ?
