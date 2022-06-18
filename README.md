@@ -1,4 +1,4 @@
-# nvimanki - Neovim plugin that imports cards into Anki.
+# nvimanki
 ## nvimanki utilizes the Anki-Connect API to bring Anki straight into Neovim.
 ## Requires plenary.nvim and nui.nvim
 ### It lets you:
