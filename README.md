@@ -13,7 +13,7 @@ use { '52617365/nvimanki', requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nu
 ```
 
 
-> Default keybindings:
+### Default keybindings:
 ```
 vim.keymap.set('n', '<leader>an', "<cmd>lua require('nvimanki').create_note()<cr>", opts)
 vim.keymap.set('n', '<leader>ad', "<cmd>lua require('nvimanki').create_deck()<cr>", opts)
