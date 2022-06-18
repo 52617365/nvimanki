@@ -11,7 +11,8 @@ function G.testimodule()
   -- ui.make_question_card()
   -- api.update_decks()
   -- api.create_deck("somedecknamexd")
-  api.create_note("somedecknamexd", "question", "answer")
+  -- api.create_note("somedecknamexd", "question", "answer")
+  ui.make_a_note()
   -- api.delete_deck("somedecknamexd")
 end
 

@@ -37,7 +37,7 @@ G.send_post_request = function(body)
 end
 
 -- Gets all decks from the AnkiConnect endpoint and then writes them all into a file.
--- WORKS
+-- works
 G.update_decks = function()
   local body = {
     action = "deckNames",
@@ -52,7 +52,7 @@ G.update_decks = function()
   end
 end
 
--- WORKS
+-- works
 G.create_note = function(deck, question, answer)
   local body = {
     action = "addNote",

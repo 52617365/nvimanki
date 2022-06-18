@@ -48,8 +48,7 @@ G.choose_deck = function(question, answer)
       print("CLOSED")
     end,
     on_submit = function(deck)
-      api.create_note(deck, question, answer)
-      -- send request (deck.text, question, answer)
+      api.create_note(deck.text, question, answer)
     end,
   })
   -- mount the component
@@ -58,7 +57,8 @@ G.choose_deck = function(question, answer)
   menu:on(event.BufLeave, menu.menu_props.on_close, { once = true })
 end
 
-G.make_question_card = function()
+-- TODO: Ask user for the deck he wants to add note into.
+G.make_a_note = function()
   local input = Input({
     position = "20%",
     size = {
@@ -123,8 +123,7 @@ G.make_answer_card = function(question)
     -- TODO: Collect this value.
     on_submit = function(answer)
       -- send request or ask for deck.
-      print(question .. " " .. answer)
-      -- ask for deck.
+      G.choose_deck(question, answer)
     end,
   })
   -- mount/open the component
@@ -134,10 +133,5 @@ G.make_answer_card = function(question)
     input:unmount()
   end)
 end
-
-
--- question depends on answer.
-
--- TODO: Capture the result of this function.
 
 return G
