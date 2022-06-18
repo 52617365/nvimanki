@@ -37,6 +37,7 @@ G.send_post_request = function(body)
 end
 
 -- Gets all decks from the AnkiConnect endpoint and then writes them all into a file.
+-- WORKS
 G.update_decks = function()
   local body = {
     action = "deckNames",
@@ -51,6 +52,7 @@ G.update_decks = function()
   end
 end
 
+-- WORKS
 G.create_note = function(deck, question, answer)
   local body = {
     action = "addNote",
@@ -82,7 +84,7 @@ G.create_note = function(deck, question, answer)
 end
 
 
--- TODO: Get deck_name from user.
+-- WORKS
 G.create_deck = function(deck_name)
   local body = {
     action = "createDeck",
@@ -101,9 +103,8 @@ G.create_deck = function(deck_name)
 end
 
 -- TODO: MAKE THIS WORK.
--- SEEMS TO BE SOMETHING WRONG WITH THE API ITSELF.
-G.delete_deck = function()
-  local deck_name = "asd"
+-- API IS FUCKED SO THIS DOES NOT WORK
+G.delete_deck = function(deck_name)
   local body = {
     action = "deleteDecks",
     version = 6,
@@ -112,7 +113,6 @@ G.delete_deck = function()
       cardsToo = true
     }
   }
-  print(vim.fn.json_encode(body))
 
   local res = G.send_post_request(body)
   local err = G.api_error_handling(res, "succesfully deleted " .. deck_name, "error deleting " .. deck_name)

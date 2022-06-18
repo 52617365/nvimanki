@@ -9,7 +9,10 @@ local G = {}
 
 function G.testimodule()
   -- ui.make_question_card()
-  api.update_decks()
+  -- api.update_decks()
+  -- api.create_deck("somedecknamexd")
+  api.create_note("somedecknamexd", "question", "answer")
+  -- api.delete_deck("somedecknamexd")
 end
 
 return G
