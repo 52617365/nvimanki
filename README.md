@@ -30,7 +30,7 @@ vim.keymap.set('n', '<leader>au', "<cmd>lua require('nvimanki').update_decks()<c
 vim.keymap.set('x', '<leader>av', "<cmd>lua require('nvimanki').create_deck_from_visualization()<cr>", opts)
 ```
 ### Example format for create_deck_from_visualization()
-> question|answer
+> this is the question|this is the answer
 
 
 ### TODO
