@@ -13,16 +13,18 @@ local utils = require('nvimanki.utils')
 -- public interface starts here.
 local G = {}
 
--- format is |question| - |answer|
+-- format is question|answer
 function G.create_deck_from_visualization()
-  local visualized_text = utils.visual_selection()
-  local dash = string.find(visualized_text, "|-|")
-  if dash == nil then
+  local visualized_text = utils.visual_selection()[1]
+  local pipe = string.find(visualized_text, "|")
+  if pipe == nil then
     print("Incorrect form.")
   else
-    local question = visualized_text.sub(0, dash)
-    local answer = visualized_text.sub(dash + 1, #visualized_text)
-    api.choose_deck(question, answer)
+    local question = string.sub(visualized_text, 0, pipe - 1)
+    local answer = string.sub(visualized_text, pipe + 1, #visualized_text)
+    print(question)
+    print(answer)
+    ui.choose_deck(question, answer)
   end
 end
 
