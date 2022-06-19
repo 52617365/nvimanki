@@ -8,6 +8,9 @@
 * Auto updates decks after creating
 * Auto import basic question + answer pairs from line (question|answer) is format.
 
+### IMPORTANT
+- When you use the plugin for the first time, make sure to call update_decks() to make nvimanki aware of the decks you have. In the future, you only have to do this if you update Anki outside of Neovim.
+
 ### Install:
 ```
 Using Packer:
