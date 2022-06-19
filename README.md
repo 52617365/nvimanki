@@ -6,6 +6,7 @@
 * Add new decks into Anki
 * Create new notes (supports only basic as of now, more to come)
 * Auto updates decks after creating
+* Auto import basic question + answer pairs from line (question|answer) is format.
 
 ### Install:
 ```
@@ -14,11 +15,12 @@ use { '52617365/nvimanki', requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nu
 ```
 
 
-### Default keybindings:
+### Example keybindings:
 ```
 vim.keymap.set('n', '<leader>an', "<cmd>lua require('nvimanki').create_note()<cr>", opts)
 vim.keymap.set('n', '<leader>ad', "<cmd>lua require('nvimanki').create_deck()<cr>", opts)
 vim.keymap.set('n', '<leader>au', "<cmd>lua require('nvimanki').update_decks()<cr>", opts)
+vim.keymap.set('x', '<leader>av', "<cmd>lua require('nvimanki').create_deck_from_visualization()<cr>", opts)
 ```
 
 
